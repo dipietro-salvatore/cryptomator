@@ -31,16 +31,16 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
       - name: Build and Test
         run: mvn -B install --file main/pom.xml -Pcoverage
-      - name: Run Codacy Coverage Reporter
-        run: |
-          curl -o ~/codacy-coverage-reporter.jar https://repo.maven.apache.org/maven2/com/codacy/codacy-coverage-reporter/7.1.0/codacy-coverage-reporter-7.1.0-assembly.jar
-          $JAVA_HOME/bin/java -jar ~/codacy-coverage-reporter.jar report -l Java -r main/commons/target/site/jacoco/jacoco.xml --partial
-          $JAVA_HOME/bin/java -jar ~/codacy-coverage-reporter.jar report -l Java -r main/keychain/target/site/jacoco/jacoco.xml --partial
-          $JAVA_HOME/bin/java -jar ~/codacy-coverage-reporter.jar report -l Java -r main/ui/target/site/jacoco/jacoco.xml --partial
-          $JAVA_HOME/bin/java -jar ~/codacy-coverage-reporter.jar report -l Java -r main/launcher/target/site/jacoco/jacoco.xml --partial
-          $JAVA_HOME/bin/java -jar ~/codacy-coverage-reporter.jar final
-        env:
-          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      #- name: Run Codacy Coverage Reporter
+      #  run: |
+      #    curl -o ~/codacy-coverage-reporter.jar https://repo.maven.apache.org/maven2/com/codacy/codacy-coverage-reporter/7.1.0/codacy-coverage-reporter-7.1.0-assembly.jar
+      #    $JAVA_HOME/bin/java -jar ~/codacy-coverage-reporter.jar report -l Java -r main/commons/target/site/jacoco/jacoco.xml --partial
+      #    $JAVA_HOME/bin/java -jar ~/codacy-coverage-reporter.jar report -l Java -r main/keychain/target/site/jacoco/jacoco.xml --partial
+      #    $JAVA_HOME/bin/java -jar ~/codacy-coverage-reporter.jar report -l Java -r main/ui/target/site/jacoco/jacoco.xml --partial
+      #    $JAVA_HOME/bin/java -jar ~/codacy-coverage-reporter.jar report -l Java -r main/launcher/target/site/jacoco/jacoco.xml --partial
+      #    $JAVA_HOME/bin/java -jar ~/codacy-coverage-reporter.jar final
+      #  env:
+      #    CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
       - name: Assemble Buildkit
         run: mvn -B package -DskipTests --file main/pom.xml --resume-from=buildkit -Prelease
       - name: Upload buildkit-linux.zip
@@ -48,16 +48,16 @@ jobs:
         with:
           name: buildkit-linux.zip
           path: main/buildkit/target/buildkit-linux.zip
-      - name: Upload buildkit-mac.zip
-        uses: actions/upload-artifact@v1
-        with:
-          name: buildkit-mac.zip
-          path: main/buildkit/target/buildkit-mac.zip
-      - name: Upload buildkit-win.zip
-        uses: actions/upload-artifact@v1
-        with:
-          name: buildkit-win.zip
-          path: main/buildkit/target/buildkit-win.zip
+      #- name: Upload buildkit-mac.zip
+      #  uses: actions/upload-artifact@v1
+      #  with:
+      #    name: buildkit-mac.zip
+      #    path: main/buildkit/target/buildkit-mac.zip
+      #- name: Upload buildkit-win.zip
+      #  uses: actions/upload-artifact@v1
+      #  with:
+      #    name: buildkit-win.zip
+      #    path: main/buildkit/target/buildkit-win.zip
           
   release:
     name: Draft a Release on GitHub Releases
