@@ -6,12 +6,20 @@ on:
 jobs: 
   build:
     name: Build and Test2
-    runs-on: ubuntu-latest
+    runs-on: ubuntu18.04
     steps:
       - uses: actions/checkout@v2
+      - uses: uraimo/run-on-arch-action@v1.0.8
+        id: runcmd
+        with:
+          architecture: armv7
+          distribution: ubuntu18.04
+          run: |
+            uname -a
+            echo ::set-output name=uname::$(uname -a)
       - uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 14
       - uses: actions/cache@v1
         with:
           path: ~/.m2/repository
